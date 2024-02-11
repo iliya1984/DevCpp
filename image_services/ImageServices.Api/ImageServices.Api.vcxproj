@@ -127,15 +127,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DatasetController.cpp" />
+    <ClCompile Include="controllers\DatasetController.cpp" />
     <ClCompile Include="ImageServices.Api.cpp" />
+    <ClCompile Include="services\DatasetService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DatasetController.h" />
+    <ClInclude Include="controllers\DatasetController.h" />
     <ClInclude Include="di.hpp" />
+    <ClInclude Include="dtos\DatasetDto.h" />
+    <ClInclude Include="services\DatasetService.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

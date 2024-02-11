@@ -18,7 +18,10 @@
     <ClCompile Include="ImageServices.Api.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DatasetController.cpp">
+    <ClCompile Include="controllers\DatasetController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="services\DatasetService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -26,10 +29,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DatasetController.h">
+    <ClInclude Include="controllers\DatasetController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="di.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dtos\DatasetDto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="services\DatasetService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
