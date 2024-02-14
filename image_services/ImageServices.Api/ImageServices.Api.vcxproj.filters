@@ -27,6 +27,9 @@
     <ClCompile Include="data_access\Repository.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="utils\ConfigurationManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -50,5 +53,14 @@
     <ClInclude Include="models\Dataset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="models\configuration\DataAccessSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\ConfigurationManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <_EmbedManagedResourceFile Include="app-settings.json" />
   </ItemGroup>
 </Project>

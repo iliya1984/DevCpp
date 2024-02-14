@@ -10,9 +10,13 @@
 
 using namespace std;
 
+Repository::Repository() {}
+Repository::Repository(DataAccessSettings settings) {
+    _settings = settings;
+}
+
 Dataset Repository::createDataset(Dataset dataset)
 {
-
     try {
         sql::Driver* driver;
         sql::Connection* con;
@@ -21,27 +25,15 @@ Dataset Repository::createDataset(Dataset dataset)
 
         /* Create a connection */
         driver = get_driver_instance();
-        con = driver->connect("tcp://127.0.0.1:3306", "root", "password");
         /* Connect to the MySQL test database */
-        con->setSchema("image_metadata");
+        con = driver->connect(_settings.host, _settings.user, _settings.password);
+        con->setSchema(_settings.schema);
 
         stmt = con->createStatement();
 
         auto sqlCommand = "INSERT INTO datasets(name, domain) values ('" + dataset.name + "', '" + dataset.domain + "')";
         bool inserted = stmt->execute(sqlCommand);
 
-        ////res = stmt->executeQuery("SELECT 'Hello World!' AS _message");
-        //while (res->next()) {
-        //    cout << "\t... MySQL replies: ";
-        //    /* Access column data by alias or column name */
-        //    cout << res->getString("_message") << endl;
-        //    cout << "\t... MySQL says it again: ";
-        //    /* Access column data by numeric offset, 1 is the first column */
-        //    cout << res->getString(1) << endl;
-        //}
-
-
-        //delete res;
         delete stmt;
         delete con;
 

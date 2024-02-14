@@ -1,0 +1,8 @@
+{
+  "dataAccess": {
+    "host": "tcp://127.0.0.1:3306",
+    "user": "root",
+    "password": "password",
+    "schema" : "image_metadata" 
+  }
+}

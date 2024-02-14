@@ -138,8 +138,12 @@
     <ClCompile Include="data_access\Repository.cpp" />
     <ClCompile Include="ImageServices.Api.cpp" />
     <ClCompile Include="services\DatasetService.cpp" />
+    <ClCompile Include="utils\ConfigurationManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <_EmbedManagedResourceFile Include="app-settings.json">
+      <FileType>Document</FileType>
+    </_EmbedManagedResourceFile>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -147,8 +151,10 @@
     <ClInclude Include="data_access\Repository.h" />
     <ClInclude Include="di.hpp" />
     <ClInclude Include="dtos\DatasetDto.h" />
+    <ClInclude Include="models\configuration\DataAccessSettings.h" />
     <ClInclude Include="models\Dataset.h" />
     <ClInclude Include="services\DatasetService.h" />
+    <ClInclude Include="utils\ConfigurationManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
