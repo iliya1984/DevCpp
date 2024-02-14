@@ -8,11 +8,13 @@ using namespace crow;
 using namespace crow::json;
 using namespace std;
 
+DatasetController::DatasetController() { }
+
 DatasetController::DatasetController(DatasetService datasetService) {
     _datasetService = datasetService;
 }
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DatasetDto, name)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DatasetDto, name, domain)
 response DatasetController::createDataset(const request& req)
 {
     rvalue inputValue = load(req.body);

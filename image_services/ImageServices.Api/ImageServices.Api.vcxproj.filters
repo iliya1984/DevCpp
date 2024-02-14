@@ -24,6 +24,9 @@
     <ClCompile Include="services\DatasetService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="data_access\Repository.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -39,6 +42,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="services\DatasetService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data_access\Repository.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="models\Dataset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

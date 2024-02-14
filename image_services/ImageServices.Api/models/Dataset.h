@@ -3,7 +3,7 @@
 
 using namespace std;
 
-struct DatasetDto {
+struct Dataset {
 public:
     string domain;
     string name;
