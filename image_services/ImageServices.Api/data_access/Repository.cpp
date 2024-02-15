@@ -15,36 +15,48 @@ Repository::Repository(DataAccessSettings settings) {
     _settings = settings;
 }
 
+sql::Connection* Repository::openConnection() {
+    sql::Driver* driver;
+
+    /* Create a connection */
+    driver = get_driver_instance();
+    /* Connect to the MySQL test database */
+    auto connection = driver->connect(_settings.host, _settings.user, _settings.password);
+
+    connection->setSchema(_settings.schema);
+    return connection;
+}
+
+void Repository::closeConnection(sql::Connection* connection) {
+    delete(connection);
+}
+
+void Repository::logSQLException(sql::SQLException& e) {
+    cout << "# ERR: SQLException in " << __FILE__;
+    cout << "(" << __FUNCTION__ << ") on line "
+        << __LINE__ << endl;
+    cout << "# ERR: " << e.what();
+    cout << " (MySQL error code: " << e.getErrorCode();
+    cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+}
+
 Dataset Repository::createDataset(Dataset dataset)
 {
     try {
-        sql::Driver* driver;
-        sql::Connection* con;
-        sql::Statement* stmt;
-        sql::ResultSet* res;
-
-        /* Create a connection */
-        driver = get_driver_instance();
-        /* Connect to the MySQL test database */
-        con = driver->connect(_settings.host, _settings.user, _settings.password);
-        con->setSchema(_settings.schema);
-
-        stmt = con->createStatement();
+        
+        sql::Connection* connection = openConnection();
+        sql::Statement* statement = connection->createStatement();
 
         auto sqlCommand = "INSERT INTO datasets(name, domain) values ('" + dataset.name + "', '" + dataset.domain + "')";
-        bool inserted = stmt->execute(sqlCommand);
+        bool inserted = statement->execute(sqlCommand);
 
-        delete stmt;
-        delete con;
+        delete statement;
+        closeConnection(connection);
 
     }
     catch (sql::SQLException& e) {
-        cout << "# ERR: SQLException in " << __FILE__;
-        cout << "(" << __FUNCTION__ << ") on line "
-            << __LINE__ << endl;
-        cout << "# ERR: " << e.what();
-        cout << " (MySQL error code: " << e.getErrorCode();
-        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+        logSQLException(e);
+        throw e;
     }
     return Dataset();
 }
