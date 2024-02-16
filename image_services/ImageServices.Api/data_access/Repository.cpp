@@ -11,33 +11,31 @@
 using namespace std;
 
 Repository::Repository() {}
-Repository::Repository(DataAccessSettings settings) {
+Repository::Repository(Logger logger, DataAccessSettings settings) {
+    _logger = logger;
     _settings = settings;
 }
 
 sql::Connection* Repository::openConnection() {
     sql::Driver* driver;
-
-    /* Create a connection */
     driver = get_driver_instance();
-    /* Connect to the MySQL test database */
-    auto connection = driver->connect(_settings.host, _settings.user, _settings.password);
+    _logger.debug("MySql driver instance was created");
 
+    auto connection = driver->connect(_settings.host, _settings.user, _settings.password);
     connection->setSchema(_settings.schema);
+
+    _logger.debug("MySql database connection was created for the host " + _settings.host + " and schema " + _settings.schema);
     return connection;
 }
 
 void Repository::closeConnection(sql::Connection* connection) {
     delete(connection);
+    _logger.debug("MySql connection was closed");
 }
 
-void Repository::logSQLException(sql::SQLException& e) {
-    cout << "# ERR: SQLException in " << __FILE__;
-    cout << "(" << __FUNCTION__ << ") on line "
-        << __LINE__ << endl;
-    cout << "# ERR: " << e.what();
-    cout << " (MySQL error code: " << e.getErrorCode();
-    cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+void Repository::deleteStatement(sql::Statement* statement) {
+    delete(statement);
+    _logger.debug("MySql statement was deleted");
 }
 
 Dataset Repository::createDataset(Dataset dataset)
@@ -48,14 +46,16 @@ Dataset Repository::createDataset(Dataset dataset)
         sql::Statement* statement = connection->createStatement();
 
         auto sqlCommand = "INSERT INTO datasets(name, domain) values ('" + dataset.name + "', '" + dataset.domain + "')";
-        bool inserted = statement->execute(sqlCommand);
+        statement->execute(sqlCommand);
 
-        delete statement;
+        _logger.info("Dataset " + dataset.name + " was stored");
+
+        deleteStatement(statement);
         closeConnection(connection);
 
     }
     catch (sql::SQLException& e) {
-        logSQLException(e);
+        _logger.error(e);
         throw e;
     }
     return Dataset();

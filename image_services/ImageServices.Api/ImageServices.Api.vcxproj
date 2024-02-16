@@ -139,6 +139,7 @@
     <ClCompile Include="ImageServices.Api.cpp" />
     <ClCompile Include="services\DatasetService.cpp" />
     <ClCompile Include="utils\ConfigurationManager.cpp" />
+    <ClCompile Include="utils\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <_EmbedManagedResourceFile Include="app-settings.json">
@@ -155,6 +156,7 @@
     <ClInclude Include="models\Dataset.h" />
     <ClInclude Include="services\DatasetService.h" />
     <ClInclude Include="utils\ConfigurationManager.h" />
+    <ClInclude Include="utils\Logger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

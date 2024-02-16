@@ -8,6 +8,7 @@
 #include <nlohmann/json.hpp>
 #include "models/configuration/DataAccessSettings.h"
 #include "utils/ConfigurationManager.h"
+#include "utils/Logger.h"
 
 namespace di = boost::di;
 
@@ -15,8 +16,10 @@ using namespace crow;
 using namespace crow::json;
 using namespace std;
 
+
 int main()
 {
+    auto logger_ptr = spdlog::daily_logger_mt("imserv_logger", "logs/daily.txt", 0, 0);
     auto configurationManager = new ConfigurationManager("app-settings.json");
     DataAccessSettings dataAccessSettings = configurationManager->getSection("dataAccess");
     
@@ -24,6 +27,7 @@ int main()
 
     const auto injector = di::make_injector(
         di::bind<DataAccessSettings>().to(dataAccessSettings),
+        di::bind<Logger>().to(new Logger(logger_ptr)),
         di::bind<Repository>().to<Repository>(),
         di::bind<DatasetService>().to<DatasetService>(),
         di::bind<DatasetController>().to<DatasetController>()
