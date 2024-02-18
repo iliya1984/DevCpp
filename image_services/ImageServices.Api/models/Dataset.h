@@ -8,12 +8,8 @@ public:
     string id;
     string domain;
     string name;
+    string createDate;
+    string updateDate;
 
     Dataset(){}
-
-    Dataset(const Dataset& other) {
-        id = other.id;
-        name = other.name;
-        domain = other.domain;
-    }
 };

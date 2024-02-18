@@ -12,6 +12,8 @@
 
 using namespace std;
 
+static string DATASET_ENTITY_SCHEMA = "id, name, domain, createDate, updateDate";
+
 Repository::Repository() {}
 Repository::Repository(LoggerFactory loggerFactory, DataAccessSettings settings) {
     _logger = loggerFactory.getLogger("Repostory");
@@ -51,6 +53,8 @@ std::list<Dataset> Repository::mapToDatasetList(sql::ResultSet* resultSet) {
         result.id = resultSet->getString("id");
         result.name = resultSet->getString("name");
         result.domain = resultSet->getString("domain");
+        result.createDate = resultSet->getString("createDate");
+        result.updateDate = resultSet->getString("updateDate");
         resultList.push_back(result);
     }
 
@@ -62,7 +66,7 @@ Dataset Repository::getDatasetById(sql::Connection* connection, string id)
     sql::ResultSet* resultDs;
 
     auto statement = connection->createStatement();
-    auto sqlCommand = "SELECT id, name, domain FROM datasets WHERE id = '" + id + "'";
+    auto sqlCommand = "SELECT " + DATASET_ENTITY_SCHEMA + " FROM datasets WHERE id = '" + id + "'";
     resultDs = statement->executeQuery(sqlCommand);
 
     auto resultList = mapToDatasetList(resultDs);
@@ -81,7 +85,7 @@ Dataset Repository::createDataset(Dataset dataset)
         sql::Statement *statement = connection->createStatement();
        
         auto id = Utils::generateUUID();
-        auto sqlCommand = "INSERT INTO datasets(id, name, domain) values ('" + id + "','" + dataset.name + "', '" + dataset.domain + "')";
+        auto sqlCommand = "INSERT INTO datasets(" + DATASET_ENTITY_SCHEMA + ") values ('" + id + "','" + dataset.name + "', '" + dataset.domain + "', UTC_TIMESTAMP(), UTC_TIMESTAMP())";
         statement->execute(sqlCommand);
         
         _logger->info("Dataset " + dataset.name + " was stored");

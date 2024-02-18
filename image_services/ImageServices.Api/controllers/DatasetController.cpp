@@ -14,7 +14,6 @@ DatasetController::DatasetController(DatasetService datasetService) {
     _datasetService = datasetService;
 }
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DatasetDto, id, name, domain)
 response DatasetController::createDataset(const request& req)
 {
     rvalue inputValue = load(req.body);
