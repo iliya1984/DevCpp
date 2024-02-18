@@ -28,3 +28,9 @@ response DatasetController::createDataset(const request& req)
     nlohmann::json output = createdDataset;
     return response{ output.dump() };
 }
+
+response DatasetController::getDatasetById(string id) {
+    DatasetDto createdDataset = _datasetService.getDatasetById(id);
+    nlohmann::json output = createdDataset;
+    return response{ output.dump() };
+}

@@ -42,5 +42,11 @@ int main()
             return controller.createDataset(req);
         });
 
+    CROW_ROUTE(app, "/datasets/<string>")
+        ([&](string id) {
+        auto controller = injector.create<DatasetController>();
+        return controller.getDatasetById(id);
+            });
+
     app.port(18080).multithreaded().run();
 }

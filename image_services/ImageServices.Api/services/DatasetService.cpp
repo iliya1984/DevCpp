@@ -19,3 +19,11 @@ DatasetDto DatasetService::createDataset(DatasetDto datasetDto)
     DatasetDto resultDto = _mapper.map(result);
     return resultDto;
 }
+
+DatasetDto DatasetService::getDatasetById(string id)
+{
+    auto result = _repository.getDatasetById(id);
+
+    DatasetDto resultDto = _mapper.map(result);
+    return resultDto;
+}

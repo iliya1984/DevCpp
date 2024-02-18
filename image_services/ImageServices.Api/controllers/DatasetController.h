@@ -12,4 +12,5 @@ public:
     DatasetController();
     DatasetController(DatasetService datasetService);
     response createDataset(const request& req);
+    response getDatasetById(string id);
 };

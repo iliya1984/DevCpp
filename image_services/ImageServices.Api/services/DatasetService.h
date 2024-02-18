@@ -12,4 +12,5 @@ public:
     DatasetService();
     DatasetService(DatasetMapper mapper, Repository repository);
     DatasetDto createDataset(DatasetDto datasetDto);
+    DatasetDto getDatasetById(string id);
 };

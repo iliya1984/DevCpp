@@ -23,4 +23,5 @@ public:
     Repository(LoggerFactory loggerFactory, DataAccessSettings settings);
     ~Repository();
     Dataset createDataset(Dataset dataset);
+    Dataset getDatasetById(string id);
 };

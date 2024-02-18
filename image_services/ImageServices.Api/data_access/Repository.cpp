@@ -105,3 +105,18 @@ Dataset Repository::createDataset(Dataset dataset)
     }
     return result;
 }
+
+Dataset Repository::getDatasetById(string id)
+{
+    Dataset result;
+    try {
+        sql::Connection* connection = openConnection();
+        result = getDatasetById(connection, id);
+        closeConnection(connection);
+    }
+    catch (std::exception& e) {
+        _logger->error(e);
+        throw e;
+    }
+    return result;
+}
