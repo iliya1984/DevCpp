@@ -65,6 +65,12 @@
     <ClInclude Include="utils\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="mappers\DatasetMapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\LoggerFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <_EmbedManagedResourceFile Include="app-settings.json" />

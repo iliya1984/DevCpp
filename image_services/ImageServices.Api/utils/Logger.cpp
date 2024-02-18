@@ -12,6 +12,10 @@ Logger::Logger(logger_ptr logger_ptr) {
     spdlog::flush_every(std::chrono::seconds(5));
 }
 
+Logger::~Logger() {
+    delete(&_logger);
+}
+
 void Logger::info(string message){
     _logger->info(message);
 }

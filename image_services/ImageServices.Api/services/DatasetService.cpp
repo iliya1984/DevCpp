@@ -4,22 +4,18 @@ DatasetService::DatasetService()
 {
 }
 
-DatasetService::DatasetService(Repository repository)
+DatasetService::DatasetService(DatasetMapper mapper, Repository repository)
 {
     _repository = repository;
+    _mapper = mapper;
 }
 
 DatasetDto DatasetService::createDataset(DatasetDto datasetDto)
 {
-    Dataset dataset;
-    dataset.name = datasetDto.name;
-    dataset.domain = datasetDto.domain;
+    Dataset dataset = _mapper.map(datasetDto);
+    
     auto result = _repository.createDataset(dataset);
 
-    DatasetDto resultDto;
-    resultDto.id = result.id;
-    resultDto.name = result.name;
-    resultDto.domain = result.domain;
-
+    DatasetDto resultDto = _mapper.map(result);
     return resultDto;
 }

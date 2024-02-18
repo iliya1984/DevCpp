@@ -12,6 +12,7 @@ private:
 public:
     Logger();
     Logger(logger_ptr logger_ptr);
+    ~Logger();
     void info(string message);
     void debug(string message);
     void error(exception& e);

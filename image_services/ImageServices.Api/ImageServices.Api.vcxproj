@@ -152,11 +152,13 @@
     <ClInclude Include="data_access\Repository.h" />
     <ClInclude Include="di.hpp" />
     <ClInclude Include="dtos\DatasetDto.h" />
+    <ClInclude Include="mappers\DatasetMapper.h" />
     <ClInclude Include="models\configuration\DataAccessSettings.h" />
     <ClInclude Include="models\Dataset.h" />
     <ClInclude Include="services\DatasetService.h" />
     <ClInclude Include="utils\ConfigurationManager.h" />
     <ClInclude Include="utils\Logger.h" />
+    <ClInclude Include="utils\LoggerFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
