@@ -14,9 +14,12 @@ DatasetDto DatasetService::createDataset(DatasetDto datasetDto)
     Dataset dataset;
     dataset.name = datasetDto.name;
     dataset.domain = datasetDto.domain;
-    _repository.createDataset(dataset);
+    auto result = _repository.createDataset(dataset);
 
-    DatasetDto result;
-    result.name = "foo";
-    return result;
+    DatasetDto resultDto;
+    resultDto.id = result.id;
+    resultDto.name = result.name;
+    resultDto.domain = result.domain;
+
+    return resultDto;
 }

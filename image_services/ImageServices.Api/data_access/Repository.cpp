@@ -48,26 +48,51 @@ string Repository::generateUUID() {
     return ss.str();
 }
 
+Dataset Repository::getDatasetById(sql::Connection* connection, string id)
+{
+    Dataset result;
+    sql::ResultSet* resultDs;
+
+    auto statement = connection->createStatement();
+    auto sqlCommand = "SELECT id, name, domain FROM datasets WHERE id = '" + id + "'";
+    resultDs = statement->executeQuery(sqlCommand);
+
+    while (resultDs->next()) {
+        result.id = resultDs->getString("id");
+        result.name = resultDs->getString("name");
+        result.domain = resultDs->getString("domain");
+    }
+
+    deleteStatement(statement);
+
+    return result;
+}
+
 Dataset Repository::createDataset(Dataset dataset)
 {
+    Dataset result;
     try {
-        
-        sql::Connection* connection = openConnection();
-        sql::Statement* statement = connection->createStatement();
+        sql::Connection *connection = openConnection();
+        sql::Statement *statement = connection->createStatement();
        
         auto id = generateUUID();
         auto sqlCommand = "INSERT INTO datasets(id, name, domain) values ('" + id + "','" + dataset.name + "', '" + dataset.domain + "')";
         statement->execute(sqlCommand);
         
         _logger.info("Dataset " + dataset.name + " was stored");
-
         deleteStatement(statement);
-        closeConnection(connection);
 
+        result = getDatasetById(connection, id);
+
+        closeConnection(connection);
     }
     catch (sql::SQLException& e) {
         _logger.error(e);
         throw e;
     }
-    return Dataset();
+    catch (std::exception& e){
+        _logger.error(e);
+        throw e;
+    }
+    return result;
 }

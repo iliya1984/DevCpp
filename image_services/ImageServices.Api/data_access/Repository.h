@@ -3,6 +3,7 @@
 #include "../models/configuration/DataAccessSettings.h"
 #include "../utils/Logger.h"
 #include "mysql_connection.h"
+#include "boost/uuid/uuid.hpp";
 
 class Repository {
 private:
@@ -13,6 +14,7 @@ private:
     void deleteStatement(sql::Statement* statement);
     void closeConnection(sql::Connection* connection);
     string generateUUID();
+    Dataset getDatasetById(sql::Connection* connection, string id);
 
 public:
     Repository();
