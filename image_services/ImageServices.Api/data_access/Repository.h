@@ -12,6 +12,7 @@ private:
     sql::Connection* openConnection();
     void deleteStatement(sql::Statement* statement);
     void closeConnection(sql::Connection* connection);
+    string generateUUID();
 
 public:
     Repository();
