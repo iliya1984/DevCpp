@@ -159,6 +159,7 @@
     <ClInclude Include="utils\ConfigurationManager.h" />
     <ClInclude Include="utils\Logger.h" />
     <ClInclude Include="utils\LoggerFactory.h" />
+    <ClInclude Include="utils\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

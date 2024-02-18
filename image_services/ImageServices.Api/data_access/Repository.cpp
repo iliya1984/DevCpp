@@ -7,9 +7,7 @@
 #include <cppconn/statement.h>
 #include <format>
 #include <iostream> 
-#include "boost/uuid/uuid.hpp";
-#include <boost/uuid/uuid_generators.hpp>
-#include "boost/uuid/uuid_io.hpp";
+#include "../utils/Utils.h"
 #include <list>
 
 using namespace std;
@@ -44,13 +42,6 @@ void Repository::closeConnection(sql::Connection* connection) {
 void Repository::deleteStatement(sql::Statement* statement) {
     delete(statement);
     _logger->debug("MySql statement was deleted");
-}
-
-string Repository::generateUUID() {
-    auto id = boost::uuids::random_generator()();
-    std::stringstream ss;
-    ss << id;
-    return ss.str();
 }
 
 std::list<Dataset> Repository::mapToDatasetList(sql::ResultSet* resultSet) {
@@ -89,7 +80,7 @@ Dataset Repository::createDataset(Dataset dataset)
         sql::Connection *connection = openConnection();
         sql::Statement *statement = connection->createStatement();
        
-        auto id = generateUUID();
+        auto id = Utils::generateUUID();
         auto sqlCommand = "INSERT INTO datasets(id, name, domain) values ('" + id + "','" + dataset.name + "', '" + dataset.domain + "')";
         statement->execute(sqlCommand);
         

@@ -71,6 +71,9 @@
     <ClInclude Include="utils\LoggerFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="utils\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <_EmbedManagedResourceFile Include="app-settings.json" />
