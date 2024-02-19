@@ -22,4 +22,5 @@ public:
     Repository(LoggerFactory loggerFactory, DataAccessSettings settings);
     Dataset createDataset(Dataset dataset);
     Dataset getDatasetById(string id);
+    void deleteDataset(string id);
 };

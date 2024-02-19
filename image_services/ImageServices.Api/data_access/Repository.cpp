@@ -91,15 +91,31 @@ Dataset Repository::createDataset(Dataset dataset)
 
         closeConnection(connection);
     }
-    catch (sql::SQLException& e) {
-        _logger.error(e);
-        throw e;
-    }
     catch (std::exception& e){
         _logger.error(e);
         throw e;
     }
     return result;
+}
+
+void Repository::deleteDataset(string id) {
+    Dataset result;
+    try {
+        sql::Connection* connection = openConnection();
+        sql::Statement* statement = connection->createStatement();
+
+        auto sqlCommand = "DELETE FROM datasets WHERE id = '" + id + "'";
+        statement->execute(sqlCommand);
+
+        _logger.info("Dataset with id " + id + " was deleted");
+
+        deleteStatement(statement);
+        closeConnection(connection);
+    }
+    catch (std::exception& e) {
+        _logger.error(e);
+        throw e;
+    }
 }
 
 Dataset Repository::getDatasetById(string id)

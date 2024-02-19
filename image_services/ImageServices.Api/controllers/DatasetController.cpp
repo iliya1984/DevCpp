@@ -20,7 +20,7 @@ response DatasetController::createDataset(const request& req)
     DatasetDto input = nlohmann::json::parse(req.body);
 
     if (!inputValue) {
-        return response(status::BAD_REQUEST); // same as crow::response(400)
+        return response(status::BAD_REQUEST);
     }
 
     DatasetDto createdDataset = _datasetService.createDataset(input);
@@ -33,4 +33,10 @@ response DatasetController::getDatasetById(string id) {
     DatasetDto createdDataset = _datasetService.getDatasetById(id);
     nlohmann::json output = createdDataset;
     return response{ output.dump() };
+}
+
+response DatasetController::deleteDataset(string id)
+{
+    _datasetService.deleteDataset(id);
+    return response { };
 }

@@ -44,9 +44,16 @@ int main()
 
     CROW_ROUTE(app, "/datasets/<string>")
         ([&](string id) {
-        auto controller = injector.create<DatasetController>();
-        return controller.getDatasetById(id);
-            });
+            auto controller = injector.create<DatasetController>();
+            return controller.getDatasetById(id);
+        });
+
+    CROW_ROUTE(app, "/datasets/<string>")
+        .methods("DELETE"_method)
+        ([&](string id) {
+            auto controller = injector.create<DatasetController>();
+            return controller.deleteDataset(id);
+        });
 
     app.port(18080).multithreaded().run();
 }

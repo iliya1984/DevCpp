@@ -13,4 +13,5 @@ public:
     DatasetService(DatasetMapper mapper, Repository repository);
     DatasetDto createDataset(DatasetDto datasetDto);
     DatasetDto getDatasetById(string id);
+    void deleteDataset(string id);
 };

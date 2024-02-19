@@ -13,4 +13,5 @@ public:
     DatasetController(DatasetService datasetService);
     response createDataset(const request& req);
     response getDatasetById(string id);
+    response deleteDataset(string id);
 };

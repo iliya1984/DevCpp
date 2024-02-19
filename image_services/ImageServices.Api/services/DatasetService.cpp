@@ -27,3 +27,8 @@ DatasetDto DatasetService::getDatasetById(string id)
     DatasetDto resultDto = _mapper.map(result);
     return resultDto;
 }
+
+void DatasetService::deleteDataset(string id)
+{
+    _repository.deleteDataset(id);
+}
