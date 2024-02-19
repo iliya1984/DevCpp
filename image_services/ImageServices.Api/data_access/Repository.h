@@ -15,13 +15,11 @@ private:
     sql::Connection* openConnection();
     void deleteStatement(sql::Statement* statement);
     void closeConnection(sql::Connection* connection);
-    string generateUUID();
     Dataset getDatasetById(sql::Connection* connection, string id);
     std::list<Dataset> mapToDatasetList(sql::ResultSet* resultSet);
 public:
     Repository();
     Repository(LoggerFactory loggerFactory, DataAccessSettings settings);
-    ~Repository();
     Dataset createDataset(Dataset dataset);
     Dataset getDatasetById(string id);
 };

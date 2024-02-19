@@ -2,10 +2,9 @@
 #include "Logger.h"
 #include "Utils.h"
 
-
 class LoggerFactory {
 public:
-    Logger getLogger(string loggerName) {
+   Logger getLogger(string loggerName) {
         try
         {
             auto loggerId = Utils::generateUUID();

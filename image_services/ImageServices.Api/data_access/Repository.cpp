@@ -20,9 +20,6 @@ Repository::Repository(LoggerFactory loggerFactory, DataAccessSettings settings)
     _settings = settings;
 }
 
-Repository::~Repository(){
-}
-
 sql::Connection* Repository::openConnection() {
     sql::Driver* driver;
     driver = get_driver_instance();
