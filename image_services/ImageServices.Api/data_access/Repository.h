@@ -10,7 +10,7 @@
 class Repository {
 private:
     DataAccessSettings _settings;
-    Logger* _logger;
+    Logger _logger;
 
     sql::Connection* openConnection();
     void deleteStatement(sql::Statement* statement);

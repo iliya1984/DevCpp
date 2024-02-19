@@ -21,29 +21,28 @@ Repository::Repository(LoggerFactory loggerFactory, DataAccessSettings settings)
 }
 
 Repository::~Repository(){
-    //delete(_logger);
 }
 
 sql::Connection* Repository::openConnection() {
     sql::Driver* driver;
     driver = get_driver_instance();
-    _logger->debug("MySql driver instance was created");
+    _logger.debug("MySql driver instance was created");
 
     auto connection = driver->connect(_settings.host, _settings.user, _settings.password);
     connection->setSchema(_settings.schema);
 
-    _logger->debug("MySql database connection was created for the host " + _settings.host + " and schema " + _settings.schema);
+    _logger.debug("MySql database connection was created for the host " + _settings.host + " and schema " + _settings.schema);
     return connection;
 }
 
 void Repository::closeConnection(sql::Connection* connection) {
     delete(connection);
-    _logger->debug("MySql connection was closed");
+    _logger.debug("MySql connection was closed");
 }
 
 void Repository::deleteStatement(sql::Statement* statement) {
     delete(statement);
-    _logger->debug("MySql statement was deleted");
+    _logger.debug("MySql statement was deleted");
 }
 
 std::list<Dataset> Repository::mapToDatasetList(sql::ResultSet* resultSet) {
@@ -88,7 +87,7 @@ Dataset Repository::createDataset(Dataset dataset)
         auto sqlCommand = "INSERT INTO datasets(" + DATASET_ENTITY_SCHEMA + ") values ('" + id + "','" + dataset.name + "', '" + dataset.domain + "', UTC_TIMESTAMP(), UTC_TIMESTAMP())";
         statement->execute(sqlCommand);
         
-        _logger->info("Dataset " + dataset.name + " was stored");
+        _logger.info("Dataset " + dataset.name + " was stored");
         deleteStatement(statement);
 
         result = getDatasetById(connection, id);
@@ -96,11 +95,11 @@ Dataset Repository::createDataset(Dataset dataset)
         closeConnection(connection);
     }
     catch (sql::SQLException& e) {
-        _logger->error(e);
+        _logger.error(e);
         throw e;
     }
     catch (std::exception& e){
-        _logger->error(e);
+        _logger.error(e);
         throw e;
     }
     return result;
@@ -115,7 +114,7 @@ Dataset Repository::getDatasetById(string id)
         closeConnection(connection);
     }
     catch (std::exception& e) {
-        _logger->error(e);
+        _logger.error(e);
         throw e;
     }
     return result;

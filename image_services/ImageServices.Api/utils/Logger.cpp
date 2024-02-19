@@ -13,7 +13,7 @@ Logger::Logger(logger_ptr logger_ptr) {
 }
 
 Logger::~Logger() {
-    delete(&_logger);
+    //delete(&_logger);
 }
 
 void Logger::info(string message){
