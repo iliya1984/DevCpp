@@ -11,10 +11,12 @@ ImageService::ImageService(StorageClient storageClient, LoggerFactory loggerFact
     _logger = loggerFactory.getLogger("ImageService");
 }
 
-ImageUploadResultDto ImageService::upload(string fileName, ImagePropertiesDto properties, string content)
+ImageUploadResultDto ImageService::upload(ImagePropertiesDto properties, string content)
 {
+    auto fileName = properties.fileName;
+
     ImageMetadata metadata;
-    metadata.domainId = properties.domainId;
+    metadata.domainId = properties.domain;
 
     auto splitIndex = fileName.find(".");
     metadata.name = fileName.substr(0, splitIndex);

@@ -6,6 +6,8 @@ using namespace std;
 
 struct ImagePropertiesDto {
 public:
-    string domainId;
+    string datasetId;
+    string fileName;
+    string domain;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImagePropertiesDto, domainId)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ImagePropertiesDto, datasetId, fileName, domain)

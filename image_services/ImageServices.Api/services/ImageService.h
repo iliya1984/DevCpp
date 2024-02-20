@@ -16,5 +16,5 @@ private:
 public:
     ImageService();
     ImageService(StorageClient storageClient, LoggerFactory loggerFactory);
-    ImageUploadResultDto upload(string fileName, ImagePropertiesDto properties, string content);
+    ImageUploadResultDto upload(ImagePropertiesDto properties, string content);
 };

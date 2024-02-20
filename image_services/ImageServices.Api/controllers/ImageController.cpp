@@ -27,7 +27,6 @@ void ImageController::logHeaders(mph_map headers) {
 response ImageController::upload(const request& req)
 {
     string imageContent;
-    string imageName;
     ImagePropertiesDto imageProperties;
 
     crow::multipart::message file_message(req);
@@ -39,31 +38,22 @@ response ImageController::upload(const request& req)
 
         // Extract the file name
         auto contentDisposition = part_value.headers.find("Content-Disposition");
-        if (contentDisposition == part_value.headers.end())
-        {
+        if (contentDisposition == part_value.headers.end()) {
             _logger.error("No Content-Disposition found");
             return crow::response(400);
         }
 
         logHeaders(part_value.headers);
 
-        if ("image" == part_name) {
-           
-            auto params_it = contentDisposition->second.params.find("filename");
-            if (params_it == contentDisposition->second.params.end())
-            {
-                _logger.error("Part with name \"image\" should have a file");
-                return crow::response(400);
-            }
-            imageName = params_it->second.c_str();
+        if ("file" == part_name) {
             imageContent = part_value.body;
         }
-        else if ("imageProperties" == part_name) {
+        else if ("fileProperties" == part_name) {
             imageProperties = nlohmann::json::parse(part_value.body);
         }
     }
 
-    auto uploadResult = _service.upload(imageName, imageProperties, imageContent);
+    auto uploadResult = _service.upload(imageProperties, imageContent);
 
     nlohmann::json output = uploadResult;
     return response{ output.dump() };
