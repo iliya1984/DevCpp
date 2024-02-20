@@ -16,7 +16,8 @@ ImageUploadResultDto ImageService::upload(ImagePropertiesDto properties, string 
     auto fileName = properties.fileName;
 
     ImageMetadata metadata;
-    metadata.domainId = properties.domain;
+    metadata.domain = properties.domain;
+    metadata.datasetId = properties.datasetId;
 
     auto splitIndex = fileName.find(".");
     metadata.name = fileName.substr(0, splitIndex);

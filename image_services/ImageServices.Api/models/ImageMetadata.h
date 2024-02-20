@@ -5,7 +5,8 @@ using namespace std;
 struct ImageMetadata {
 public:
     string id;
-    string domainId;
+    string domain;
+    string datasetId;
     string name;
     string extension;
     string createDate;

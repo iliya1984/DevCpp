@@ -1,4 +1,7 @@
 #include "StorageClient.h"
+#include <boost/filesystem.hpp>
+
+using namespace boost::filesystem;
 
 StorageClient::StorageClient()
 {
@@ -11,7 +14,17 @@ StorageClient::StorageClient(LoggerFactory loggerFactory)
 
 void StorageClient::upload(ImageMetadata metadata, string imageContent)
 {
-    string imageFileName = metadata.name + "." + metadata.extension;
+    string storagePath = "../../../Storage";
+    string domainFolderPath = storagePath + "/" + metadata.domain;
+    string datasetFolderPath = domainFolderPath + "/" + metadata.datasetId;
+
+    path domainDirectory(domainFolderPath);
+    create_directory(domainDirectory);
+
+    path datasetDirectory(datasetFolderPath);
+    create_directory(datasetDirectory);
+
+    string imageFileName = datasetFolderPath + "/" + metadata.name + "." + metadata.extension;
     std::ofstream out_file(imageFileName, std::ios::out | std::ios::binary);
     if (!out_file)
     {
