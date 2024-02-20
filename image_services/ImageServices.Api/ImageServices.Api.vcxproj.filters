@@ -33,6 +33,15 @@
     <ClCompile Include="utils\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="controllers\ImageController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="services\ImageService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="data_access\StorageClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -72,6 +81,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="controllers\ImageController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="models\ImageMetadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="services\ImageService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dtos\ImagePropertiesDto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dtos\ImageUploadResultDto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data_access\StorageClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

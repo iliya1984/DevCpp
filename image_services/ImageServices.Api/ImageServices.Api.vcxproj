@@ -137,9 +137,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="controllers\DatasetController.cpp" />
+    <ClCompile Include="controllers\ImageController.cpp" />
     <ClCompile Include="data_access\Repository.cpp" />
+    <ClCompile Include="data_access\StorageClient.cpp" />
     <ClCompile Include="ImageServices.Api.cpp" />
     <ClCompile Include="services\DatasetService.cpp" />
+    <ClCompile Include="services\ImageService.cpp" />
     <ClCompile Include="utils\ConfigurationManager.cpp" />
     <ClCompile Include="utils\Logger.cpp" />
   </ItemGroup>
@@ -151,13 +154,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="controllers\DatasetController.h" />
+    <ClInclude Include="controllers\ImageController.h" />
     <ClInclude Include="data_access\Repository.h" />
+    <ClInclude Include="data_access\StorageClient.h" />
     <ClInclude Include="di.hpp" />
     <ClInclude Include="dtos\DatasetDto.h" />
+    <ClInclude Include="dtos\ImagePropertiesDto.h" />
+    <ClInclude Include="dtos\ImageUploadResultDto.h" />
     <ClInclude Include="mappers\DatasetMapper.h" />
     <ClInclude Include="models\configuration\DataAccessSettings.h" />
     <ClInclude Include="models\Dataset.h" />
+    <ClInclude Include="models\ImageMetadata.h" />
     <ClInclude Include="services\DatasetService.h" />
+    <ClInclude Include="services\ImageService.h" />
     <ClInclude Include="utils\ConfigurationManager.h" />
     <ClInclude Include="utils\Logger.h" />
     <ClInclude Include="utils\LoggerFactory.h" />
