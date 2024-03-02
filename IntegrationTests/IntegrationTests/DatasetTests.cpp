@@ -34,9 +34,11 @@ namespace IntegrationTests
             http::request<http::string_body> req(http::verb::post, "/datasets", 11);
             req.set(http::field::host, "localhost");
             req.set(http::field::user_agent, "Boost Beast HTTP Client");
+            req.set(http::field::content_type, "application/json");
 
             // Set the request body if needed
             req.body() = "{ \"id\": \"\", \"name\" : \"test20\", \"domain\" : \"test_domain\", \"createDate\" : \"\", \"updateDate\" : \"\" }";
+            req.prepare_payload();
 
             // Send the HTTP request
             http::write(socket, req);
