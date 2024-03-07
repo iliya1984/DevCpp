@@ -3,66 +3,55 @@
 #include <boost/asio.hpp>
 #include <boost/beast.hpp>
 #include <iostream>
+#include "Utils.h"
+#include "HttpClients.h"
+#include "Dtos.h"
+#include <nlohmann/json.hpp>
 
 namespace beast = boost::beast;      // from <boost/beast.hpp>
 namespace http = beast::http;         // from <boost/beast/http.hpp>
 namespace net = boost::asio;          // from <boost/asio.hpp>
 using tcp = boost::asio::ip::tcp;     // from <boost/asio/ip/tcp.hpp>
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace std;
 
 namespace IntegrationTests
 {
 	TEST_CLASS(DatasetTests)
 	{
+    private:
+       DatasetDto createDatasetDto(){
+            DatasetDto dataset;
+            dataset.id = "";
+            dataset.name = "test22";
+            dataset.domain = "test_domain";
+            dataset.createDate = "";
+            dataset.updateDate = "";
+
+            return dataset;
+        }
+
 	public:
 
 		TEST_METHOD(DatasetCreationSuccess)
 		{
-			//Arrange
-             // Set up the io_context
-            net::io_context io_context;
+			//Create dataset client and dataset dto
+            DatasetClient client;
+            DatasetDto expectedDataset = createDatasetDto();
 
-            // Resolve the hostname and port number
-            tcp::resolver resolver(io_context);
-            auto const results = resolver.resolve("localhost", "18080");
+            //Send create dataset request
+            DatasetDto actualDataset = client.createDataset(expectedDataset);
+            string datasetId = actualDataset.id;
 
-            // Make the connection
-            tcp::socket socket(io_context);
-            net::connect(socket, results.begin(), results.end());
+            //Assert created dataset
+            Assert::AreEqual(actualDataset.name, expectedDataset.name);
+            Assert::AreEqual(actualDataset.domain, expectedDataset.domain);
+            Assert::IsFalse(actualDataset.id.empty());
+            Assert::IsFalse(actualDataset.createDate.empty());
+            Assert::IsFalse(actualDataset.updateDate.empty());
 
-            // Create the HTTP request
-            http::request<http::string_body> req(http::verb::post, "/datasets", 11);
-            req.set(http::field::host, "localhost");
-            req.set(http::field::user_agent, "Boost Beast HTTP Client");
-            req.set(http::field::content_type, "application/json");
-
-            // Set the request body if needed
-            req.body() = "{ \"id\": \"\", \"name\" : \"test20\", \"domain\" : \"test_domain\", \"createDate\" : \"\", \"updateDate\" : \"\" }";
-            req.prepare_payload();
-
-            // Send the HTTP request
-            http::write(socket, req);
-
-            // This buffer is used for reading and must be persisted
-            beast::flat_buffer buffer;
-
-            // Receive the HTTP response
-            http::response<http::dynamic_body> res;
-            http::read(socket, buffer, res);
-
-            // Print the response status code and message
-            std::cout << "Response code: " << res.result_int() << std::endl;
-            std::cout << "Response message: " << res.reason() << std::endl;
-
-            // Print the response body
-            auto response = beast::buffers_to_string(res.body().data());
-            std::cout << "Response body: " << response << std::endl;
-
-            // Close the socket
-            beast::error_code ec;
-            socket.shutdown(tcp::socket::shutdown_both, ec);
-            if (ec && ec != beast::errc::not_connected)
-                throw beast::system_error{ ec };
-		}
+            //client.deleteDataset(datasetId);
+            //client.getDatasetById(datasetId);
+        }
 	};
 }
