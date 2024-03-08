@@ -57,7 +57,7 @@ std::list<Dataset> Repository::mapToDatasetList(sql::ResultSet* resultSet) {
     return resultList;
 }
 
-Dataset Repository::getDatasetById(sql::Connection* connection, string id)
+unique_ptr<Dataset> Repository::getDatasetById(sql::Connection* connection, string id)
 {
     sql::ResultSet* resultDs;
 
@@ -69,13 +69,18 @@ Dataset Repository::getDatasetById(sql::Connection* connection, string id)
 
     deleteStatement(statement);
 
-    Dataset result = resultList.front();
+    auto size = resultList.size();
+    if (size == 0) {
+        return nullptr;
+    }
+
+    auto result = make_unique<Dataset>(Dataset(resultList.front()));
     return result;
 }
 
-Dataset Repository::createDataset(Dataset dataset)
+unique_ptr<Dataset> Repository::createDataset(Dataset dataset)
 {
-    Dataset result;
+    unique_ptr<Dataset> result = nullptr;
     try {
         sql::Connection *connection = openConnection();
         sql::Statement *statement = connection->createStatement();
@@ -118,9 +123,9 @@ void Repository::deleteDataset(string id) {
     }
 }
 
-Dataset Repository::getDatasetById(string id)
+unique_ptr<Dataset> Repository::getDatasetById(string id)
 {
-    Dataset result;
+    unique_ptr<Dataset> result = nullptr;
     try {
         sql::Connection* connection = openConnection();
         result = getDatasetById(connection, id);

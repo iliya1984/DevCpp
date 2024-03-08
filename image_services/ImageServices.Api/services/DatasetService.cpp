@@ -10,21 +10,28 @@ DatasetService::DatasetService(DatasetMapper mapper, Repository repository)
     _mapper = mapper;
 }
 
-DatasetDto DatasetService::createDataset(DatasetDto datasetDto)
+unique_ptr<DatasetDto> DatasetService::createDataset(DatasetDto datasetDto)
 {
     Dataset dataset = _mapper.map(datasetDto);
     
     auto result = _repository.createDataset(dataset);
 
-    DatasetDto resultDto = _mapper.map(result);
+    if (result == nullptr) {
+        return nullptr;
+    }
+
+    auto resultDto = make_unique<DatasetDto>(_mapper.map(*result));
     return resultDto;
 }
 
-DatasetDto DatasetService::getDatasetById(string id)
+unique_ptr<DatasetDto> DatasetService::getDatasetById(string id)
 {
     auto result = _repository.getDatasetById(id);
+    if (result == nullptr) {
+        return nullptr;
+    }
 
-    DatasetDto resultDto = _mapper.map(result);
+    auto resultDto = make_unique<DatasetDto>(_mapper.map(*result));
     return resultDto;
 }
 

@@ -7,6 +7,8 @@
 #include "boost/uuid/uuid.hpp";
 #include <list>
 
+using namespace std;
+
 class Repository {
 private:
     DataAccessSettings _settings;
@@ -15,12 +17,12 @@ private:
     sql::Connection* openConnection();
     void deleteStatement(sql::Statement* statement);
     void closeConnection(sql::Connection* connection);
-    Dataset getDatasetById(sql::Connection* connection, string id);
-    std::list<Dataset> mapToDatasetList(sql::ResultSet* resultSet);
+    unique_ptr<Dataset> getDatasetById(sql::Connection* connection, string id);
+    list<Dataset> mapToDatasetList(sql::ResultSet* resultSet);
 public:
     Repository();
     Repository(LoggerFactory loggerFactory, DataAccessSettings settings);
-    Dataset createDataset(Dataset dataset);
-    Dataset getDatasetById(string id);
+    unique_ptr<Dataset> createDataset(Dataset dataset);
+    unique_ptr<Dataset> getDatasetById(string id);
     void deleteDataset(string id);
 };

@@ -40,18 +40,25 @@ namespace IntegrationTests
             DatasetDto expectedDataset = createDatasetDto();
 
             //Send create dataset request
-            DatasetDto actualDataset = client.createDataset(expectedDataset);
-            string datasetId = actualDataset.id;
+            auto actualDatasetPtr = client.createDataset(expectedDataset);
+            
 
             //Assert created dataset
+            Assert::IsNotNull(actualDatasetPtr.get());
+            
+            auto actualDataset = *actualDatasetPtr.get();
+            string datasetId = actualDataset.id;
+                
             Assert::AreEqual(actualDataset.name, expectedDataset.name);
             Assert::AreEqual(actualDataset.domain, expectedDataset.domain);
             Assert::IsFalse(actualDataset.id.empty());
             Assert::IsFalse(actualDataset.createDate.empty());
             Assert::IsFalse(actualDataset.updateDate.empty());
 
-            //client.deleteDataset(datasetId);
-            //client.getDatasetById(datasetId);
+            client.deleteDataset(datasetId);
+            auto resultDataset = client.getDatasetById(datasetId);
+
+            Assert::IsNull(resultDataset.get());
         }
 	};
 }

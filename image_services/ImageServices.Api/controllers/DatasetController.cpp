@@ -23,15 +23,28 @@ response DatasetController::createDataset(const request& req)
         return response(status::BAD_REQUEST);
     }
 
-    DatasetDto createdDataset = _datasetService.createDataset(input);
+    auto createdDataset = _datasetService.createDataset(input);
+    if (createdDataset == nullptr) {
+        auto errorResponse = response();
+        errorResponse.code = 500;
+        errorResponse.body = "Dataset creation failed";
+        return errorResponse;
+    }
 
-    nlohmann::json output = createdDataset;
+
+    nlohmann::json output = *createdDataset;
     return response{ output.dump() };
 }
 
 response DatasetController::getDatasetById(string id) {
-    DatasetDto createdDataset = _datasetService.getDatasetById(id);
-    nlohmann::json output = createdDataset;
+    auto dataset = _datasetService.getDatasetById(id);
+    if (dataset == nullptr) {
+        auto notFound = response();
+        notFound.code = 404;
+        return notFound;
+    }
+    
+    nlohmann::json output = *dataset;
     return response{ output.dump() };
 }
 

@@ -10,6 +10,7 @@ namespace beast = boost::beast;
 namespace http = beast::http;
 namespace net = boost::asio;
 using tcp = boost::asio::ip::tcp;
+using namespace std;
 
 class DatasetClient {
 public:
@@ -18,7 +19,7 @@ public:
 
 	DatasetClient();
 
-	DatasetDto createDataset(DatasetDto dataset);
-	DatasetDto getDatasetById(string datasetId);
+	unique_ptr<DatasetDto> createDataset(DatasetDto dataset);
+	unique_ptr<DatasetDto> getDatasetById(string datasetId);
 	void deleteDataset(string datasetId);
 };

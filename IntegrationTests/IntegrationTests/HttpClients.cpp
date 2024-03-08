@@ -5,7 +5,7 @@ DatasetClient::DatasetClient()
 {
 }
 
-DatasetDto DatasetClient::createDataset(DatasetDto dataset)
+unique_ptr<DatasetDto> DatasetClient::createDataset(DatasetDto dataset)
 {
     tcp::socket socket = socketManager.createAndConnectSocket(io_context);
 
@@ -31,8 +31,12 @@ DatasetDto DatasetClient::createDataset(DatasetDto dataset)
     http::read(socket, buffer, res);
 
     auto resultCode = res.result_int();
+    if (resultCode == 500) {
+        return nullptr;
+    }
+
     string response = beast::buffers_to_string(res.body().data());
-    DatasetDto resultDataset = JsonSerializer<DatasetDto>::deserialize(response);
+    auto resultDataset = make_unique<DatasetDto>(JsonSerializer<DatasetDto>::deserialize(response));
 
     socketManager.closeSocket(socket);
 
@@ -53,7 +57,7 @@ void DatasetClient::deleteDataset(string datasetId)
     socketManager.closeSocket(socket);
 }
 
-DatasetDto DatasetClient::getDatasetById(string datasetId) {
+unique_ptr<DatasetDto> DatasetClient::getDatasetById(string datasetId) {
     tcp::socket socket = socketManager.createAndConnectSocket(io_context);
 
     http::request<http::string_body> req(http::verb::get, "/datasets/" + datasetId, 11);
@@ -67,8 +71,13 @@ DatasetDto DatasetClient::getDatasetById(string datasetId) {
     http::read(socket, buffer, res);
 
     auto resultCode = res.result_int();
+
+    if (resultCode == 404) {
+        return nullptr;
+    }
+
     string response = beast::buffers_to_string(res.body().data());
-    DatasetDto resultDataset = JsonSerializer<DatasetDto>::deserialize(response);
+    auto resultDataset = make_unique<DatasetDto>(JsonSerializer<DatasetDto>::deserialize(response));
 
     socketManager.closeSocket(socket);
 
